@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head><title>Home Page</title></head>
+<style type="text/css" media="screen">@import "css/cakes.css";</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<h1>Cake List</h1>
+
+<div ng-app="cakeApp" ng-controller="cakeCtrl">
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image</th>
+        </tr>
+        <tr ng-repeat="cake in cakes">
+            <td>{{ cake.title }}</td>
+            <td>{{ cake.desc }}</td>
+            <td><img src="{{ cake.image }}" alt="{{ cake.title }} image" height="200" /></td>
+        </tr>
+    </table>
+
+</div>
+
+<script>
+var app = angular.module('cakeApp', []);
+app.controller('cakeCtrl', function($scope, $http) {
+    $http.get("/cakes").then(function (response) {
+        $scope.cakes = response.data;
+    });
+});
+</script>
+
+</body>
+</html>
