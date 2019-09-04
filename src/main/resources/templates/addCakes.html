@@ -1,16 +1,16 @@
 <html>
 <head>
-    <title>AngularJs $http.post() Service Response Example</title>
+    <title>Add Cakes</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript">
-        var app = angular.module('postserviceApp', []);
-        app.controller('postserviceCtrl', function ($scope, $http) {
+        var app = angular.module('postServiceApp', []);
+        app.controller('postServiceCtrl', function ($scope, $http) {
 
         $scope.title = null;
         $scope.desc = null;
         $scope.image = null;
         $scope.lblMsg = null;
-        $scope.postdata = function (title, desc, image) {
+        $scope.postData = function (title, desc, image) {
             var cake = {
                 title: title,
                 desc: desc,
@@ -20,8 +20,8 @@
         //Call the services
 
         $http.post('/cakes', JSON.stringify(cake)).then(function (response) {
-            if (response.cake)
-                $scope.msg = "Post Data Submitted Successfully!";
+            $scope.msg = "Post Data Submitted Successfully!";
+            $scope.statusval = response.status;
         }, function (response) {
             $scope.msg = "Service not Exists";
             $scope.statusval = response.status;
@@ -37,14 +37,14 @@
 
 <body>
 
-<div ng-app="postserviceApp" ng-controller="postserviceCtrl">
+<div ng-app="postServiceApp" ng-controller="postServiceCtrl">
 
     <div>
         Title : <input ng-model="title" /><br/><br/>
         Description : <input ng-model="desc" /><br/><br/>
         Image Url : <input ng-model="image" /><br/><br/>
 
-        <input type="button" value="Send" ng-click="postdata(title, desc, image)" /> <br/><br/>
+        <input type="button" value="Send" ng-click="postData(title, desc, image)" /> <br/><br/>
     </div>
 
     <p>Output Message : {{msg}}</p>
