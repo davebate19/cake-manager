@@ -32,4 +32,12 @@ public class CakeService {
     public List<Cake> getAllCakes() {
         return cakeRepository.findAll();
     }
+
+    public Cake getCakeById(Long cakeId) {
+        return cakeRepository.findById(cakeId).orElse(null);
+    }
+
+    public Cake getCakeByTitle(String title) {
+        return cakeRepository.findByTitle(title).orElse(null);
+    }
 }
