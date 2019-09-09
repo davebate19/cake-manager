@@ -1,7 +1,6 @@
 package com.waracle.cakemgr.controller;
 
 import com.waracle.cakemgr.service.CakeService;
-import com.waracle.cakemgr.utils.TestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static com.waracle.cakemgr.utils.TestUtils.getTestCake;
 import static org.junit.Assert.assertEquals;
@@ -43,28 +43,28 @@ public class ApiControllerTest {
 
     @Test
     public void getCakeById_Success() throws Exception {
-        when(mockCakeService.getCakeById(1L)).thenReturn(getTestCake());
+        when(mockCakeService.getCakeById(1L)).thenReturn(Optional.of(getTestCake()));
         String cake = apiController.getCakeById(1L);
         assertEquals(JSON_CAKE, cake);
     }
 
     @Test
     public void getCakeById_NotFound() throws Exception {
-        when(mockCakeService.getCakeById(1L)).thenReturn(null);
+        when(mockCakeService.getCakeById(1L)).thenReturn(Optional.empty());
         String cake = apiController.getCakeById(1L);
         assertEquals("Cake not found", cake);
     }
 
     @Test
     public void getCakeByTitle_Success() throws Exception {
-        when(mockCakeService.getCakeByTitle("testCake")).thenReturn(getTestCake());
+        when(mockCakeService.getCakeByTitle("testCake")).thenReturn(Optional.of(getTestCake()));
         String cake = apiController.getCakeByTitle("testCake");
         assertEquals(JSON_CAKE, cake);
     }
 
     @Test
     public void getCakeByTitle_NotFound() throws Exception {
-        when(mockCakeService.getCakeByTitle("testCake")).thenReturn(null);
+        when(mockCakeService.getCakeByTitle("testCake")).thenReturn(Optional.empty());
         String cake = apiController.getCakeByTitle("testCake");
         assertEquals("Cake not found", cake);
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CakeService {
@@ -33,11 +34,11 @@ public class CakeService {
         return cakeRepository.findAll();
     }
 
-    public Cake getCakeById(Long cakeId) {
-        return cakeRepository.findById(cakeId).orElse(null);
+    public Optional<Cake> getCakeById(Long cakeId) {
+        return cakeRepository.findById(cakeId);
     }
 
-    public Cake getCakeByTitle(String title) {
-        return cakeRepository.findByTitle(title).orElse(null);
+    public Optional<Cake> getCakeByTitle(String title) {
+        return cakeRepository.findByTitle(title);
     }
 }

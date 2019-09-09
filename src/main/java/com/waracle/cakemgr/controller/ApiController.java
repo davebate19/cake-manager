@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ApiController {
@@ -28,16 +29,16 @@ public class ApiController {
 
     @GetMapping("/cakes/cakeId={cakeId}")
     public String getCakeById(@PathVariable Long cakeId) throws JsonProcessingException {
-        Cake cake = cakeService.getCakeById(cakeId);
+        Optional<Cake> cake = cakeService.getCakeById(cakeId);
         final ObjectMapper mapper = new ObjectMapper();
-        return cake != null ? mapper.writeValueAsString(cake) : "Cake not found";
+        return cake.isPresent() ? mapper.writeValueAsString(cake.get()) : "Cake not found";
     }
 
     @GetMapping("/cakes/title={title}")
     public String getCakeByTitle(@PathVariable String title) throws JsonProcessingException {
-        Cake cake = cakeService.getCakeByTitle(title);
+        Optional<Cake> cake = cakeService.getCakeByTitle(title);
         final ObjectMapper mapper = new ObjectMapper();
-        return cake != null ? mapper.writeValueAsString(cake) : "Cake not found";
+        return cake.isPresent() ? mapper.writeValueAsString(cake.get()) : "Cake not found";
     }
 
     @PostMapping("/cakes")

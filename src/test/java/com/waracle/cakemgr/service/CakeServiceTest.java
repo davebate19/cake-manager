@@ -14,7 +14,8 @@ import java.util.Optional;
 
 import static com.waracle.cakemgr.utils.TestUtils.getTestCake;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
@@ -59,8 +60,9 @@ public class CakeServiceTest {
         Optional<Cake> cake = Optional.of(getTestCake());
         when(mockCakeRepository.findById(1L)).thenReturn(cake);
 
-        Cake response = cakeService.getCakeById(1L);
-        assertEquals(getTestCake(), response);
+        Optional<Cake> response = cakeService.getCakeById(1L);
+        assertTrue(response.isPresent());
+        assertEquals(getTestCake(), response.get());
     }
 
     @Test
@@ -68,8 +70,8 @@ public class CakeServiceTest {
         Optional<Cake> cake = Optional.empty();
         when(mockCakeRepository.findById(1L)).thenReturn(cake);
 
-        Cake response = cakeService.getCakeById(1L);
-        assertNull(response);
+        Optional<Cake> response = cakeService.getCakeById(1L);
+        assertFalse(response.isPresent());
     }
 
     @Test
@@ -77,8 +79,9 @@ public class CakeServiceTest {
         Optional<Cake> cake = Optional.of(getTestCake());
         when(mockCakeRepository.findByTitle("testCake")).thenReturn(cake);
 
-        Cake response = cakeService.getCakeByTitle("testCake");
-        assertEquals(getTestCake(), response);
+        Optional<Cake> response = cakeService.getCakeByTitle("testCake");
+        assertTrue(response.isPresent());
+        assertEquals(getTestCake(), response.get());
     }
 
     @Test
@@ -86,7 +89,7 @@ public class CakeServiceTest {
         Optional<Cake> cake = Optional.empty();
         when(mockCakeRepository.findByTitle("testCake")).thenReturn(cake);
 
-        Cake response = cakeService.getCakeByTitle("testCake");
-        assertNull(response);
+        Optional<Cake> response = cakeService.getCakeByTitle("testCake");
+        assertFalse(response.isPresent());
     }
 }
